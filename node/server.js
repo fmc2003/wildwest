@@ -1,34 +1,33 @@
-
 const express = require('express');
-
 const app = express();
-const PORT = process.env.PORT || 3000;  //you don't need to use your special IP anymore!
+const PORT = process.env.PORT || 3000;
 
-
-// Body parsing middleware
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the public directory
-app.use(express.static('public'));
+// Remove static file serving - nginx will handle this
+// app.use(express.static('public')); // Remove this line
 
-// Routes
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'Welcome to my Node.js Express app!',
-    timestamp: new Date().toISOString(),
-  });
+// API Routes
+// Note: We don't include '/api' in our routes because nginx strips it when forwarding
+// nginx receives: http://localhost/api/users
+// nginx forwards to: http://backend-nodejs:3000/users (without /api)
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Hello from the API!',
+        timestamp: new Date().toISOString()
+    });
 });
 
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found' });
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'healthy',
+        service: 'nodejs-backend'
+    });
 });
 
 // Start server
-// Note: We use '0.0.0.0' instead of 'localhost' because Docker containers
-// need to bind to all network interfaces to accept connections from outside the container
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
