@@ -1,0 +1,65 @@
+<h1>Create an account</h1>
+<p class="lead">Fill in the details to register.</p>
+
+{{#if error}}
+  <p class="error">{{error}}</p>
+{{/if}}
+
+<form id="registerForm" method="POST" action="/register" novalidate>
+  <div class="field">
+    <label for="fullname">Full name</label>
+    <input id="fullname" name="fullname" type="text" autocomplete="name" required placeholder="Your name" value="{{fullname}}">
+  </div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" value="{{email}}">
+  </div>
+
+  <div class="field">
+    <label for="password">Password</label>
+    <div class="row">
+      <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="At least 6 characters">
+      <button type="button" class="vis-toggle" id="togglePwd">Show</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="confirm">Confirm password</label>
+    <div class="row">
+      <input id="confirm" name="confirm" type="password" autocomplete="new-password" required placeholder="Repeat password">
+      <button type="button" class="vis-toggle" id="toggleConfirm">Show</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <label class="checkbox">
+      <input id="terms" name="terms" type="checkbox" {{#if terms}}checked{{/if}}>
+      <span class="muted">I agree to the terms</span>
+    </label>
+  </div>
+
+  <div style="margin-top:18px">
+    <button id="submitBtn" class="btn" type="submit">Create account</button>
+  </div>
+</form>
+
+<div style="margin-top:14px" class="small">
+  Already have an account? <a href="/login">Sign in</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = (btnId, inputId) => {
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    btn.addEventListener('click', () => {
+      const type = input.type === 'password' ? 'text' : 'password';
+      input.type = type;
+      btn.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+  };
+  toggle('togglePwd', 'password');
+  toggle('toggleConfirm', 'confirm');
+});
+</script>

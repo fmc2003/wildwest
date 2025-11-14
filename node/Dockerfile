@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Remove static file copying - nginx will handle this
-# COPY public/ ./public/  # Remove this line if it exists
+COPY public/ ./public/  
 
 # Expose port (internal to container network)
 EXPOSE 3000

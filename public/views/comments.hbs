@@ -1,0 +1,23 @@
+<h1>Comments</h1>
+<p class="lead">All posts (in-memory)</p>
+
+{{#if comments.length}}
+  <ul style="list-style:none;padding:0;margin:0">
+    {{#each comments}}
+      <li style="padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04);">
+        <div style="font-size:0.95rem;margin-bottom:6px"><strong>{{this.author}}</strong> <span class="muted" style="font-size:0.85rem"> · {{this.createdAt}}</span></div>
+        <div>{{this.text}}</div> <!-- intentionally not escaped to allow XSS for lab -->
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="muted">No comments yet. Be the first!</p>
+{{/if}}
+
+<div style="margin-top:16px">
+  {{#if currentUser}}
+    <a class="btn" href="/comment/new">New Comment</a>
+  {{else}}
+    <a class="btn" href="/login">Login to comment</a>
+  {{/if}}
+</div>

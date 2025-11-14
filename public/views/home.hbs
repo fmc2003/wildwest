@@ -1,0 +1,11 @@
+<h1>Welcome to the Wild West Forum</h1>
+<p class="lead">A tiny insecure forum for COS 498 midterm. Create an account and post a comment.</p>
+
+<div style="margin-top:20px">
+  <a class="btn" href="/comments">View Comments</a>
+  {{#if currentUser}}
+    <a class="btn" href="/comment/new" style="margin-left:8px">New Comment</a>
+  {{else}}
+    <a class="btn" href="/register" style="margin-left:8px">Register</a>
+  {{/if}}
+</div>

@@ -1,33 +1,42 @@
+const path = require('path');
 const express = require('express');
+const { engine } = require('express-handlebars');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Handlebars setup
+app.engine('hbs', engine({
+  extname: '.hbs',
+  partialsDir: path.join(__dirname, 'public/views/partials')  // ✅ Add this
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'public/views')); // ✅ Views dir
 
-// Remove static file serving - nginx will handle this
-// app.use(express.static('public')); // Remove this line
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-// API Routes
-// Note: We don't include '/api' in our routes because nginx strips it when forwarding
-// nginx receives: http://localhost/api/users
-// nginx forwards to: http://backend-nodejs:3000/users (without /api)
+// Example route
+app.get('/login', (req, res) => {
+  res.render('login', { title: 'Login Page' });
+});
+
+app.get('/register', (req, res) => {
+  res.render('register', { title: 'Register Page' });
+});
+
 app.get('/', (req, res) => {
-    res.json({ 
-        message: 'Hello from the API!',
-        timestamp: new Date().toISOString()
-    });
+  res.render('home', { title: 'Home Page' });
 });
 
-app.get('/health', (req, res) => {
-    res.json({ 
-        status: 'healthy',
-        service: 'nodejs-backend'
-    });
+app.get('/comments', (req, res) => {
+  res.render('comments', { title: 'Comment Page' });
 });
 
-// Start server
+app.get('/new-comment', (req, res) => {
+  res.render('new_comment', { title: 'New Comment' });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

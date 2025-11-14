@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Login</title>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<div id="site-nav">{{> nav}}</div>
+		
+
+		<main class="card" role="main">
+			<h1>Sign in to your account</h1>
+			<p class="lead">Enter your credentials to continue.</p>
+
+			<form id="loginForm" novalidate>
+				<div class="field">
+					<label for="username">Email or username</label>
+					<input id="username" name="username" type="text" autocomplete="username" required placeholder="you@example.com">
+					<div id="userError" class="error" aria-live="polite"></div>
+				</div>
+
+				<div class="field">
+					<label for="password">Password</label>
+					<div style="display:flex;gap:8px;align-items:center">
+						<input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••">
+						<button type="button" class="vis-toggle" id="togglePwd" aria-label="Show password">Show</button>
+					</div>
+					<div id="passError" class="error" aria-live="polite"></div>
+				</div>
+
+				<div class="actions">
+					<label class="checkbox"><input id="remember" name="remember" type="checkbox"> <span class="muted">Remember me</span></label>
+					<a href="#" class="muted" style="text-decoration:none">Forgot?</a>
+				</div>
+
+				<div style="margin-top:18px">
+					<button id="submitBtn" class="btn" type="submit">Sign in</button>
+				</div>
+			</form>
+
+			<div style="margin-top:14px;font-size:0.9rem;color:var(--muted)">New here? <a href="register.html">Create an account</a></div>
+		</main>
+
+		<script>
+			(function(){
+				const form = document.getElementById('loginForm');
+				const user = document.getElementById('username');
+				const pass = document.getElementById('password');
+				const userError = document.getElementById('userError');
+				const passError = document.getElementById('passError');
+				const toggle = document.getElementById('togglePwd');
+
+				toggle.addEventListener('click', ()=>{
+					const t = pass.getAttribute('type') === 'password' ? 'text' : 'password';
+					pass.setAttribute('type', t);
+					toggle.textContent = t === 'password' ? 'Show' : 'Hide';
+				});
+
+				function validate(){
+					let ok = true;
+					userError.textContent = '';
+					passError.textContent = '';
+
+					if(!user.value.trim()){
+						userError.textContent = 'Please enter your email or username.';
+						ok = false;
+					}
+					if(!pass.value){
+						passError.textContent = 'Please enter your password.';
+						ok = false;
+					} else if(pass.value.length < 6){
+						passError.textContent = 'Password must be at least 6 characters.';
+						ok = false;
+					}
+					return ok;
+				}
+
+				form.addEventListener('submit', function(e){
+					e.preventDefault();
+					if(!validate()) return;
+					// Placeholder for real submit logic. Replace with fetch/XHR to send to server.
+					const payload = {username: user.value.trim(), password: pass.value, remember: document.getElementById('remember').checked};
+					console.log('Submitting', payload);
+					// Simulate success
+					alert('Login simulated. Check console for payload.');
+					form.reset();
+				});
+			})();
+		</script>
+	</body>
+</html>
+
+~
