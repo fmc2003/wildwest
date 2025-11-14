@@ -7,13 +7,8 @@
 
 <form id="registerForm" method="POST" action="/register" novalidate>
   <div class="field">
-    <label for="fullname">Full name</label>
-    <input id="fullname" name="fullname" type="text" autocomplete="name" required placeholder="Your name" value="{{fullname}}">
-  </div>
-
-  <div class="field">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" value="{{email}}">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" autocomplete="username" required placeholder="Your username" value="{{username}}">
   </div>
 
   <div class="field">
@@ -56,10 +51,4 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const type = input.type === 'password' ? 'text' : 'password';
       input.type = type;
-      btn.textContent = type === 'password' ? 'Show' : 'Hide';
-    });
-  };
-  toggle('togglePwd', 'password');
-  toggle('toggleConfirm', 'confirm');
-});
-</script>
+      btn.text

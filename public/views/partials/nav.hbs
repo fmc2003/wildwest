@@ -3,9 +3,16 @@
     <a class="brand" href="/">MySite</a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/login">Login</a></li>
-      <li><a href="/account">Account</a></li>
       <li><a href="/comments">Comments</a></li>
+      {{#if user}}
+        <li>
+          <form action="/logout" method="POST" style="display:inline">
+            <button type="submit" class="link-button">Logout</button>
+          </form>
+        </li>
+      {{else}}
+        <li><a href="/login">Login</a></li>
+      {{/if}}
     </ul>
   </nav>
 </header>

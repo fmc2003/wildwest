@@ -1,0 +1,18 @@
+<h1>New Comment</h1>
+
+{{#if error}}
+  <p class="error">{{error}}</p>
+{{/if}}
+
+<form method="POST" action="/comment">
+  <div class="field">
+    <label for="text">Comment</label>
+    <textarea id="text" name="text" required placeholder="Write your comment here..." rows="4"></textarea>
+  </div>
+
+  <div style="margin-top:18px">
+    <button class="btn" type="submit">Post Comment</button>
+  </div>
+</form>
+
+<a href="/comments" style="margin-top:12px; display:inline-block;">Back to Comments</a>
