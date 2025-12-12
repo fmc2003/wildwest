@@ -5,24 +5,28 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=3001
     volumes:
       - ./public:/app/public:ro
     networks:
       - app-network
-
-  nginx:
-    build:
-      context: ./nginx
-    container_name: my-nginx-proxy
+#Proxy manager
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginxManager
     restart: unless-stopped
     ports:
-      - "80:80"
-    depends_on:
-      - backend-nodejs
+      - "80:80" #HTTP Traffic
+      - "443:443" #HTTPS Traffic
+      - "5001:81" #Admin Pannel
+    volumes:
+      - ./nginx/data:/data
+      - ./nginx/letsencrypt:/etc/letsencrypt
+
     networks:
       - app-network
-
+  
 networks:
-  app-network:
-    driver: bridge
+    app-network:
+      driver: bridge
+   
