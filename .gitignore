@@ -137,3 +137,15 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Nginx Proxy Manager data
+nginx/letsencrypt/
+nginx/data/
+nginx/mysql/
+
+# Docker volumes
+**/letsencrypt/**
+**/acme/**
+
+
+.env

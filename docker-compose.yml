@@ -8,6 +8,7 @@ services:
       - PORT=3001
     volumes:
       - ./public:/app/public:ro
+      - ./node/data:/app/node/data
     networks:
       - app-network
 #Proxy manager

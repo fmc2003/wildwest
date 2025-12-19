@@ -5,6 +5,8 @@
       <li><a href="/">Home</a></li>
       <li><a href="/comments">Comments</a></li>
       {{#if user}}
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/chat">Chat</a></li>
         <li>
           <form action="/logout" method="POST" style="display:inline">
             <button type="submit" class="link-button">Logout</button>

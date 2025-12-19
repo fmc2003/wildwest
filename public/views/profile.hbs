@@ -1,0 +1,36 @@
+<!--views/profile.hbs 
+user profile settings page
+features:
+- change password
+- change email
+- change display name
+- change profile name color
+-->
+
+<h1>Profile</h1>
+
+<form method="POST" action="/profile/update-password">
+  <h3>Change Password</h3>
+  <input type="password" name="current_password" placeholder="Current Password" required>
+  <input type="password" name="new_password" placeholder="New Password" required>
+  <button type="submit">Change Password</button>
+</form>
+
+<form method="POST" action="/profile/update-email">
+  <h3>Change Email</h3>
+  <input type="password" name="current_password" placeholder="Current Password" required>
+  <input type="email" name="new_email" placeholder="New Email" required>
+  <button type="submit">Change Email</button>
+</form>
+
+<form method="POST" action="/profile/update-display-name">
+  <h3>Change Display Name</h3>
+  <input type="text" name="new_display_name" placeholder="New Display Name" required>
+  <button type="submit">Update Display Name</button>
+</form>
+
+<form method="POST" action="/profile/update-color">
+  <h3>Profile Name Color</h3>
+  <input type="color" name="profile_color" value="{{user.profile_color}}">
+  <button type="submit">Update Color</button>
+</form>

@@ -54,3 +54,14 @@ input:focus{outline:none;box-shadow:0 0 0 4px rgba(37,99,235,0.08);border-color:
 .nav-links .link-button:hover {
   text-decoration: underline;
 }
+
+.a {
+  text-decoration: none;
+  font-weight: 600;
+  transition: text-decoration 0.2s;
+}
+
+.a:hover,
+.a:focus {
+  text-decoration: underline;
+}

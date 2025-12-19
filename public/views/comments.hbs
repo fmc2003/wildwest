@@ -1,20 +1,47 @@
 <h1>Comments</h1>
-<p class="lead">All posts (in-memory)</p>
+<p class="lead">All posts</p>
+
 
 {{#if comments.length}}
   <ul style="list-style:none;padding:0;margin:0">
     {{#each comments}}
       <li style="padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04);">
-        <div style="font-size:0.95rem;margin-bottom:6px">
-          <strong>{{this.author}}</strong>
-          <span class="muted" style="font-size:0.85rem"> · {{this.createdAt}}</span>
+        <div style="font-size:0.95rem;margin-bottom:4px">
+          <strong style="color: {{profile_color}};">
+            <a style="color: {{profile_color}};" href="/user/{{this.user_id}}/comments">{{this.display_name}}</a>
+          </strong>
+          <span style="color:#777;font-size:0.8rem;margin-left:6px">
+            {{formatDate created_at}}
+          </span>
         </div>
-        <div>{{this.text}}</div>
+        <div>{{text}}</div>
       </li>
     {{/each}}
   </ul>
 {{else}}
   <p class="muted">No comments yet. Be the first!</p>
+{{/if}}
+
+{{#if pagination}}
+  <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+    
+    {{#if (gt pagination.current 1)}}
+      <a class="btn" href="/comments?page={{subtract pagination.current 1}}">
+        ← Previous
+      </a>
+    {{/if}}
+
+    <span>
+      Page {{pagination.current}} of {{pagination.totalPages}}
+    </span>
+
+    {{#if (lt pagination.current pagination.totalPages)}}
+      <a class="btn" href="/comments?page={{add pagination.current 1}}">
+        Next →
+      </a>
+    {{/if}}
+
+  </div>
 {{/if}}
 
 <div style="margin-top:16px">

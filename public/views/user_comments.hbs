@@ -1,0 +1,31 @@
+<!--views/user_comments.hbs
+user comments page
+features:
+- display user comments
+- pagination
+- link back to main comments page
+-->
+<h1 style="color: {{profile_color}};">{{profileUser.display_name}}'s Comments</h1>
+
+<div class="comments">
+  {{#each comments}}
+    <div class="comment">
+      <span class="timestamp">{{formatDate this.created_at}}</span>
+      <p>{{this.text}}</p>
+    </div>
+  {{/each}}
+</div>
+
+<div class="pagination">
+  {{#if (gt pagination.current 1)}}
+    <a href="?page={{subtract pagination.current 1}}">Previous</a>
+  {{/if}}
+
+  Page {{pagination.current}} of {{pagination.totalPages}}
+
+  {{#if (lt pagination.current pagination.totalPages)}}
+    <a href="?page={{add pagination.current 1}}">Next</a>
+  {{/if}}
+</div>
+
+<a href="/comments">Back to Comments</a>

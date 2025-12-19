@@ -1,0 +1,84 @@
+<!--views/chat.hbs
+real-time chat room using Socket.io
+features:
+- display name and profile color from user profile
+- message input box
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Room</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    #chat-container { max-width: 600px; margin: 50px auto; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    #messages { list-style: none; padding: 10px; max-height: 400px; overflow-y: auto; }
+    #messages li { margin-bottom: 10px; }
+    .display-name { font-weight: bold; margin-right: 5px; }
+    .profile-color { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+    #chat-form { display: flex; padding: 10px; border-top: 1px solid #ccc; }
+    #chat-input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    #chat-submit { padding: 8px 12px; margin-left: 5px; border: none; background: #28a745; color: #fff; border-radius: 4px; cursor: pointer; }
+    #chat-submit:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <ul id="messages"></ul>
+    <form id="chat-form">
+      <input id="chat-input" autocomplete="off" placeholder="Type a message..." />
+      <button type="submit" id="chat-submit">Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const messages = document.getElementById('messages');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+
+    //display a single message
+    function addMessage({ display_name, profile_color, text, timestamp }) {
+      const li = document.createElement('li');
+
+      const colorDot = document.createElement('span');
+      colorDot.className = 'profile-color';
+      colorDot.style.backgroundColor = profile_color || '#333';
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'display-name';
+      nameSpan.textContent = display_name + ':';
+
+      const textSpan = document.createElement('span');
+      textSpan.textContent = ' ' + text;
+
+      li.appendChild(colorDot);
+      li.appendChild(nameSpan);
+      li.appendChild(textSpan);
+
+      messages.appendChild(li);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    //load chat history
+    socket.on('chat history', (history) => {
+      history.forEach(addMessage);
+    });
+
+    //new incoming message
+    socket.on('chat message', addMessage);
+
+    //sending a message
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (text.length === 0) return;
+
+      socket.emit('chat message', { text });
+      input.value = '';
+    });
+  </script>
+</body>
+</html>

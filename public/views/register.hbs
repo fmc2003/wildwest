@@ -1,3 +1,13 @@
+<!-- views/register.hbs
+registration page
+features:
+- input for username
+- input for display name
+- input for email
+- input for password
+- input for confirm password
+- terms and conditions checkbox (unimplemented)
+-->
 <h1>Create an account</h1>
 <p class="lead">Fill in the details to register.</p>
 
@@ -6,15 +16,56 @@
 {{/if}}
 
 <form id="registerForm" method="POST" action="/register" novalidate>
+
   <div class="field">
     <label for="username">Username</label>
-    <input id="username" name="username" type="text" autocomplete="username" required placeholder="Your username" value="{{username}}">
+    <input
+      id="username"
+      name="username"
+      type="text"
+      autocomplete="username"
+      required
+      placeholder="Your username"
+      value="{{username}}"
+    >
+  </div>
+
+  <div class="field">
+    <label for="display_name">Display name</label>
+    <input
+      id="display_name"
+      name="display_name"
+      type="text"
+      required
+      placeholder="Shown publicly"
+      value="{{display_name}}"
+    >
+  </div>
+
+  <div class="field">
+    <label for="email">Email address</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      required
+      placeholder="you@example.com"
+      value="{{email}}"
+    >
   </div>
 
   <div class="field">
     <label for="password">Password</label>
     <div class="row">
-      <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="At least 6 characters">
+      <input
+        id="password"
+        name="password"
+        type="password"
+        autocomplete="new-password"
+        required
+        placeholder="At least 6 characters"
+      >
       <button type="button" class="vis-toggle" id="togglePwd">Show</button>
     </div>
   </div>
@@ -22,14 +73,27 @@
   <div class="field">
     <label for="confirm">Confirm password</label>
     <div class="row">
-      <input id="confirm" name="confirm" type="password" autocomplete="new-password" required placeholder="Repeat password">
+      <input
+        id="confirm"
+        name="confirm"
+        type="password"
+        autocomplete="new-password"
+        required
+        placeholder="Repeat password"
+      >
       <button type="button" class="vis-toggle" id="toggleConfirm">Show</button>
     </div>
   </div>
 
   <div class="actions">
     <label class="checkbox">
-      <input id="terms" name="terms" type="checkbox" {{#if terms}}checked{{/if}}>
+      <input
+        id="terms"
+        name="terms"
+        type="checkbox"
+        required
+        {{#if terms}}checked{{/if}}
+      >
       <span class="muted">I agree to the terms</span>
     </label>
   </div>
@@ -48,7 +112,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = (btnId, inputId) => {
     const btn = document.getElementById(btnId);
     const input = document.getElementById(inputId);
+
+    if (!btn || !input) return;
+
     btn.addEventListener('click', () => {
-      const type = input.type === 'password' ? 'text' : 'password';
-      input.type = type;
-      btn.text
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.textContent = isPassword ? 'Hide' : 'Show';
+    });
+  };
+
+  toggle('togglePwd', 'password');
+  toggle('toggleConfirm', 'confirm');
+});
+</script>
